@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class CategoryMapperTest {
 
 	private static final String NAME = "Joe";
-	private static final long ID = 1L;
+	private static final Long ID = 1L;
 
 	private CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
@@ -21,7 +21,7 @@ public class CategoryMapperTest {
 
 		CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
-		assertEquals(Long.valueOf(ID), category.getId());
+		assertEquals(ID, categoryDTO.getId());
 		assertEquals(NAME, categoryDTO.getName());
 	}
 }
