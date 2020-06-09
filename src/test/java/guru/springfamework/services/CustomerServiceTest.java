@@ -2,6 +2,7 @@ package guru.springfamework.services;
 
 import guru.springfamework.api.v1.mapper.CustomerMapper;
 import guru.springfamework.api.v1.model.CustomerDTO;
+import guru.springfamework.controllers.v1.CustomerController;
 import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CustomerRepository;
 import org.junit.Before;
@@ -15,6 +16,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CustomerServiceTest {
@@ -37,12 +40,12 @@ public class CustomerServiceTest {
 	public void getAllCustomers() {
 		//given
 		Customer customer1 = new Customer();
-		customer1.setId(1l);
+		customer1.setId(1L);
 		customer1.setFirstName("Michale");
 		customer1.setLastName("Weston");
 
 		Customer customer2 = new Customer();
-		customer2.setId(2l);
+		customer2.setId(2L);
 		customer2.setFirstName("Sam");
 		customer2.setLastName("Axe");
 
@@ -60,7 +63,7 @@ public class CustomerServiceTest {
 	public void getCustomerById() {
 		//given
 		Customer customer1 = new Customer();
-		customer1.setId(1l);
+		customer1.setId(1L);
 		customer1.setFirstName("Michale");
 		customer1.setLastName("Weston");
 
@@ -87,7 +90,7 @@ public class CustomerServiceTest {
 		CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
 
 		assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
-		assertEquals("/api/v1/customer/1", savedDto.getCustomerUrl());
+		assertEquals(CustomerController.BASE_URL + "/1", savedDto.getCustomerUrl());
 	}
 
 	@Test
@@ -109,6 +112,15 @@ public class CustomerServiceTest {
 
 		//then
 		assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
-		assertEquals("/api/v1/customer/1", savedDto.getCustomerUrl());
+		assertEquals(CustomerController.BASE_URL + "/1", savedDto.getCustomerUrl());
+	}
+
+	@Test
+	public void deleteCustomerById() {
+		Long id = 1L;
+
+		customerRepository.deleteById(id);
+
+		verify(customerRepository, times(1)).deleteById(anyLong());
 	}
 }
