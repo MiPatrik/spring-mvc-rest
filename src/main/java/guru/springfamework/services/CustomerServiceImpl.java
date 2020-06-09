@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override public CustomerDTO getCustomerById(Long id) {
 		return customerRepository.findById(id)
 				.map(customerMapper::customerToCustomerDTO)
-				.orElseThrow(RuntimeException::new);
+				.orElseThrow(ResourceNotFoundException::new);
 	}
 
 	@Override public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 			return returnDto;
 
-		}).orElseThrow(RuntimeException::new);
+		}).orElseThrow(ResourceNotFoundException::new);
 	}
 
 	@Override public void deleteCustomerById(Long id) {
