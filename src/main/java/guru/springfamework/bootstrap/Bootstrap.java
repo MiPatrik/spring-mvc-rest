@@ -2,8 +2,10 @@ package guru.springfamework.bootstrap;
 
 import guru.springfamework.domain.Category;
 import guru.springfamework.domain.Customer;
+import guru.springfamework.domain.Vendor;
 import guru.springfamework.repositories.CategoryRepository;
 import guru.springfamework.repositories.CustomerRepository;
+import guru.springfamework.repositories.VendorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,15 +16,18 @@ public class Bootstrap implements CommandLineRunner {
 
 	private CategoryRepository categoryRepository;
 	private CustomerRepository customerRepository;
+	private VendorRepository vendorRepository;
 
-	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
 		this.categoryRepository = categoryRepository;
 		this.customerRepository = customerRepository;
+		this.vendorRepository = vendorRepository;
 	}
 
 	@Override public void run(String... args) throws Exception {
 		addCategories();
 		addCustomers();
+		addVendor();
 	}
 
 	private void addCategories() {
@@ -51,6 +56,7 @@ public class Bootstrap implements CommandLineRunner {
 	}
 
 	private void addCustomers() {
+
 		Customer customer1 = new Customer();
 		customer1.setId(1L);
 		customer1.setFirstName("Joe");
@@ -83,5 +89,35 @@ public class Bootstrap implements CommandLineRunner {
 		customerRepository.save(customer5);
 
 		log.info("Customers loaded = " + customerRepository.count());
+	}
+
+	private void addVendor() {
+		Vendor vendor1 = new Vendor();
+		vendor1.setId(1L);
+		vendor1.setName("Name1");
+
+		Vendor vendor2 = new Vendor();
+		vendor2.setId(2L);
+		vendor2.setName("Name2");
+
+		Vendor vendor3 = new Vendor();
+		vendor3.setId(3L);
+		vendor3.setName("Name3");
+
+		Vendor vendor4 = new Vendor();
+		vendor4.setId(4L);
+		vendor4.setName("Name4");
+
+		Vendor vendor5 = new Vendor();
+		vendor5.setId(5L);
+		vendor5.setName("Name5");
+
+		vendorRepository.save(vendor1);
+		vendorRepository.save(vendor2);
+		vendorRepository.save(vendor3);
+		vendorRepository.save(vendor4);
+		vendorRepository.save(vendor5);
+
+		log.info("Vendors loaded = " + vendorRepository.count());
 	}
 }
